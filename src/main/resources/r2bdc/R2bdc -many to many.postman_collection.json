@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "29f8d9b7-6a93-4ca6-9e69-2c2f327b62ca",
+		"name": "R2bdc -many to many",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13793487"
+	},
+	"item": [
+		{
+			"name": "getDepartment all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployee all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"fe\",\r\n    \"kilowatt\": \"2\"\r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/employees?fullTime=true",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"employees"
+					],
+					"query": [
+						{
+							"key": "fullTime",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDepartment by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/departments/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"departments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployee by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/employees/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"employees",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postDepartament",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Tribu BCPss\",\r\n    \"manager\": {\r\n        \"id\": 1,\r\n        \"firstName\": \"jesus\",\r\n        \"lastName\": \"Quispe\",\r\n        \"position\": \"Chapter\",\r\n        \"fullTime\": true\r\n    },\r\n    \"employees\": [\r\n        {\r\n            \"id\": 3,\r\n            \"firstName\": \"eric\",\r\n            \"lastName\": \"Llanos\",\r\n            \"position\": \"Software Tester\",\r\n            \"fullTime\": false\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"firstName\": \"jose\",\r\n            \"lastName\": \"Valdez\",\r\n            \"position\": \"Software Developer\",\r\n            \"fullTime\": true\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmployee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"xxsdss\",\r\n    \"lastName\": \"xsdssx\",\r\n    \"position\": \"sssdx\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "putDepartament",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"RRHH\",\r\n    \"manager\": {\r\n        \"id\": 2,\r\n        \"firstName\": \"jose\",\r\n        \"lastName\": \"Val1dez\",\r\n        \"position\": \"Software Developer\",\r\n        \"fullTime\": true\r\n    },\r\n    \"employees\": [\r\n        {\r\n            \"id\": 5,\r\n            \"firstName\": \"Erica1\",\r\n            \"lastName\": \"Gimene1z\",\r\n            \"position\": \"Data Ana1lyst\",\r\n            \"fullTime\": true\r\n        }\r\n    ],\r\n    \"car\": {\r\n        \"id\": 1,\r\n        \"brand\": \"Ford\",\r\n        \"km\": 4500\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/departments/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"departments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "putEmployees",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n    \"firstName\": \"wxx1\",\r\n    \"lastName\": \"xw1x\",\r\n    \"position\": \"xw1\",\r\n    \"fullTime\": true\r\n        \r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/employees/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"employees",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDepartament",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Gerencia\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/departments/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"departments",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteEmployees",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Gerencia\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/employees/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"employees",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postCar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": null,\r\n    \"brand\": \"sss\",\r\n    \"km\": \"3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/car",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "putCar Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"brand\": \"test\",\r\n    \"kilowatt\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/car/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postCar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": null,\r\n    \"brand\": \"fe\",\r\n    \"kilowatt\": \"s\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/car/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCar all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first\": 2.0,\r\n    \"second\": 3.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/car/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"car",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCar by Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first\": 2.0,\r\n    \"second\": 3.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8084/car/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
