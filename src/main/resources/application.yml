@@ -1,0 +1,8 @@
+spring:
+  r2dbc:
+    url: ${DATABASE_HOST:r2dbc:postgresql://localhost:5432/r2bdc}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:admin}
+server:
+  port: ${SERVER_PORT:8084}
+
