@@ -2,6 +2,7 @@ package com.example.r2dgbc.demo.controller;
 
 
 import com.example.r2dgbc.demo.controller.dto.DepartmentDto;
+import com.example.r2dgbc.demo.controller.dto.EmployeeDto;
 import com.example.r2dgbc.demo.controller.dto.request.CreateDepartmentRequest;
 import com.example.r2dgbc.demo.repository.entity.Department;
 import com.example.r2dgbc.demo.repository.entity.Employee;
@@ -31,18 +32,18 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/employees")
-    public Flux<Employee> getDepartmentEmployees(@PathVariable Long id, @RequestParam(name = "fullTime", required = false) Boolean isFullTime) {
+    public Flux<EmployeeDto> getDepartmentEmployees(@PathVariable Long id, @RequestParam(name = "fullTime", required = false) Boolean isFullTime) {
         return this.service.getDepartmentEmployees(id, isFullTime);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Department> createDepartment(@Valid @RequestBody CreateDepartmentRequest request) {
+    public Mono<DepartmentDto> createDepartment(@Valid @RequestBody CreateDepartmentRequest request) {
         return this.service.createDepartment(request);
     }
 
     @PutMapping("/{id}")
-    public Mono<Department> updateDepartment(@PathVariable Long id, @RequestBody Department department) {
+    public Mono<DepartmentDto> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDto department) {
         return this.service.updateDepartment(id, department);
     }
 

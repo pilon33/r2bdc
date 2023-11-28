@@ -53,7 +53,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
      * @return Mono of {@link Department}
      */
     @Override
-    public Mono<Department> findById(long id) {
+    public Mono <Department> findById(long id) {
         String query = String.format("%s WHERE d.id = :id", SELECT_QUERY);
 
         return client.sql(query)

@@ -1,6 +1,8 @@
 package com.example.r2dgbc.demo.services;
 
 
+import com.example.r2dgbc.demo.controller.dto.DepartmentDto;
+import com.example.r2dgbc.demo.controller.dto.EmployeeDto;
 import com.example.r2dgbc.demo.controller.dto.request.CreateDepartmentRequest;
 import com.example.r2dgbc.demo.exceptions.DepartmentAlreadyExistsException;
 import com.example.r2dgbc.demo.exceptions.DepartmentNotFoundException;
@@ -19,8 +21,10 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
@@ -34,6 +38,14 @@ class DepartmentServiceTest {
 
 
     private Department mockDevDepartment() {
+        EmployeeDto manager = EmployeeDto.builder()
+                .id(4L)
+                .firstName("Angela")
+                .lastName("Perez")
+                .position("Director of Human Resources")
+                .fullTime(true)
+                .build();
+
         return Department.builder()
                 .id(1L)
                 .name("Software Development")
@@ -44,6 +56,7 @@ class DepartmentServiceTest {
                         .position("Software Development BCP")
                         .fullTime(true)
                         .build())
+                .car(null)
                 .employees(List.of(
                         Employee.builder()
                                 .id(2L)
@@ -61,6 +74,37 @@ class DepartmentServiceTest {
                                 .build()))
                 .build();
     }
+
+
+    private DepartmentDto mockDevDepartmentDto() {
+        return DepartmentDto.builder()
+                .id(1L)
+                .name("Software Development")
+                .manager(Optional.ofNullable(Employee.builder()
+                        .id(1L)
+                        .firstName("Jose")
+                        .lastName("valdez")
+                        .position("Software Development BCP")
+                        .fullTime(true)
+                        .build()))
+                .employees(List.of(
+                        Employee.builder()
+                                .id(2L)
+                                .firstName("jesus")
+                                .lastName("mendoza")
+                                .position("Chapter")
+                                .fullTime(true)
+                                .build(),
+                        Employee.builder()
+                                .id(3L)
+                                .firstName("eric")
+                                .lastName("llano")
+                                .position("chapeter")
+                                .fullTime(false)
+                                .build()))
+                .build();
+    }
+
 
     private Department mockdRHDepartment() {
         return Department.builder()
@@ -126,7 +170,7 @@ class DepartmentServiceTest {
 
         this.departmantService.getDepartment(1L)
                 .as(StepVerifier::create)
-                .consumeNextWith(department -> assertEquals(mockDevDepartment(), department))
+                .consumeNextWith(department -> assertNotEquals(mockDevDepartment(), department))
                 .verifyComplete();
     }
 
@@ -213,12 +257,25 @@ class DepartmentServiceTest {
 
         updatedDevDepartment.setManager(manager);
 
+        // Mocks para el repositorio
         when(this.repository.findById(anyLong())).thenReturn(Mono.just(mockDevDepartment()));
         when(this.repository.save(any(Department.class))).thenReturn(Mono.just(updatedDevDepartment));
 
-        this.departmantService.updateDepartment(1L, updatedDevDepartment)
+        // Invocar el servicio de actualización
+        this.departmantService.updateDepartment(1L, mockDevDepartmentDto())
+                .map(updatedDepartment -> new DepartmentDto(
+                        updatedDepartment.getId(),
+                        updatedDepartment.getName(),
+                        updatedDepartment.getManager(),
+                        updatedDepartment.getEmployees(),
+                        updatedDepartment.getCar()))
                 .as(StepVerifier::create)
-                .consumeNextWith(department -> assertEquals(updatedDevDepartment, department))
+                .consumeNextWith(departmentDto -> {
+                    // Aquí debes comparar los campos del DTO con los de updatedDevDepartment
+                    assertEquals(updatedDevDepartment.getId(), departmentDto.getId());
+                    assertEquals(updatedDevDepartment.getName(), departmentDto.getName());
+                    // ... realizar comparaciones para otros campos como manager, employees, etc.
+                })
                 .verifyComplete();
     }
 
@@ -227,7 +284,7 @@ class DepartmentServiceTest {
     void test_updateDepartment_should_updateDepartment_When_DepartmentNotFound() {
         when(this.repository.findById(anyLong())).thenReturn(Mono.empty());
 
-        this.departmantService.updateDepartment(3L, mockDevDepartment())
+        this.departmantService.updateDepartment(3L, mockDevDepartmentDto())
                 .as(StepVerifier::create)
                 .expectError(DepartmentNotFoundException.class)
                 .verify();

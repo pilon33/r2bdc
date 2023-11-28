@@ -1,6 +1,7 @@
 package com.example.r2dgbc.demo.services;
 
 
+import com.example.r2dgbc.demo.controller.dto.EmployeeDto;
 import com.example.r2dgbc.demo.controller.dto.request.CreateEmployeeRequest;
 import com.example.r2dgbc.demo.exceptions.EmployeeNotFoundException;
 import com.example.r2dgbc.demo.repository.EmployeeRepository;
@@ -31,6 +32,16 @@ class EmployeeServiceTest {
 
     private Employee mockEmployee() {
         return Employee.builder()
+                .id(1L)
+                .firstName("jose")
+                .lastName("valdez")
+                .position("Software Developer")
+                .fullTime(true)
+                .build();
+    }
+
+    private EmployeeDto mockEmployeeDto() {
+        return EmployeeDto.builder()
                 .id(1L)
                 .firstName("jose")
                 .lastName("valdez")
@@ -107,14 +118,14 @@ class EmployeeServiceTest {
     @Test
     @DisplayName("Test 8 petición updateEmployee(1, employee) Should return an updated Employee")
     void test_UpdateEmployee_Should_UpdateEmployee_ReturnEmployee() {
-        Employee updatedEmployee = mockEmployee();
+        EmployeeDto updatedEmployee = mockEmployeeDto();
 
         updatedEmployee.setFirstName("George");
 
         when(this.repository.findById(anyLong())).thenReturn(Mono.just(mockEmployee()));
-        when(this.repository.save(any(Employee.class))).thenReturn(Mono.just(updatedEmployee));
+        when(this.repository.save(any(Employee.class)).map(employee -> new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.isFullTime())) ).thenReturn(Mono.just(updatedEmployee));
 
-        this.service.updateEmployee(1L, updatedEmployee)
+        this.service.updateEmployee(1L, updatedEmployee).map(employee -> new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.isFullTime()))
                 .as(StepVerifier::create)
                 .consumeNextWith(employee -> assertEquals(updatedEmployee, employee))
                 .verifyComplete();
@@ -125,7 +136,7 @@ class EmployeeServiceTest {
     void test_UpdateEmployee_Should_UpdateEmployee_ThrowEmployeeNotFound() {
         when(this.repository.findById(anyLong())).thenReturn(Mono.empty());
 
-        this.service.updateEmployee(2L, mockEmployee())
+        this.service.updateEmployee(2L, mockEmployeeDto())
                 .as(StepVerifier::create)
                 .expectError(EmployeeNotFoundException.class)
                 .verify();

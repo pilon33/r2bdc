@@ -1,6 +1,7 @@
 package com.example.r2dgbc.demo.controller;
 
 
+import com.example.r2dgbc.demo.controller.dto.EmployeeDto;
 import com.example.r2dgbc.demo.controller.dto.request.CreateEmployeeRequest;
 import com.example.r2dgbc.demo.repository.entity.Employee;
 import com.example.r2dgbc.demo.service.EmployeeService;
@@ -19,23 +20,23 @@ public class EmployeeController {
     private final EmployeeService service;
 
     @GetMapping
-    public Flux<Employee> getEmployees(@RequestParam(required = false) String position, @RequestParam(name = "fullTime", required = false) Boolean isFullTime) {
+    public Flux<EmployeeDto> getEmployees(@RequestParam(required = false) String position, @RequestParam(name = "fullTime", required = false) Boolean isFullTime) {
         return this.service.getEmployees(position, isFullTime);
     }
 
     @GetMapping("/{id}")
-    public Mono<Employee> getEmployee(@PathVariable Long id) {
+    public Mono<EmployeeDto> getEmployee(@PathVariable Long id) {
         return this.service.getEmployee(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Employee> createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
+    public Mono<EmployeeDto> createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         return this.service.createEmployee(request);
     }
 
     @PutMapping("/{id}")
-    public Mono<Employee> updateEmployee(@PathVariable Long id,  @RequestBody  Employee employee) {
+    public Mono<EmployeeDto> updateEmployee(@PathVariable Long id,  @RequestBody  EmployeeDto employee) {
         return this.service.updateEmployee(id, employee);
     }
 

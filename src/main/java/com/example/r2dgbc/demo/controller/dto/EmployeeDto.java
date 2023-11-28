@@ -1,9 +1,20 @@
 package com.example.r2dgbc.demo.controller.dto;
 
-public record EmployeeDto ( Long id , String firstName, String lastName , String position , boolean fullTime)
-{
 
+import lombok.*;
+
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmployeeDto {
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String position;
+    private boolean fullTime;
 
 }
-
-

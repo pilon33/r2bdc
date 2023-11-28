@@ -1,18 +1,18 @@
 package com.example.r2dgbc.demo.service;
 
+import com.example.r2dgbc.demo.controller.dto.EmployeeDto;
 import com.example.r2dgbc.demo.controller.dto.request.CreateEmployeeRequest;
-import com.example.r2dgbc.demo.repository.entity.Employee;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface EmployeeService {
 
-    Flux<Employee> getEmployees(String position, Boolean isFullTime);
-    Mono<Employee> getEmployee(Long id);
+    Flux  <EmployeeDto> getEmployees(String position, Boolean isFullTime);
+    Mono<EmployeeDto> getEmployee(Long id);
 
-    Mono<Employee> createEmployee(CreateEmployeeRequest request);
+    Mono<EmployeeDto> createEmployee(CreateEmployeeRequest request);
 
-    Mono<Employee> updateEmployee(Long id, Employee employee);
+    Mono<EmployeeDto> updateEmployee(Long id, EmployeeDto employee);
 
     Mono<Void> deleteEmployee(Long id);
 
